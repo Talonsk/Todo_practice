@@ -5,49 +5,27 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useState } from 'react';
+import { styles } from './styles';
+
 import {
   SafeAreaView,
-  Text,
-  View,
+  TextInput,
 } from 'react-native';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-type ParagraphProps = PropsWithChildren<{
-  text: string;
-}>;
-
-function Title({children, title}: SectionProps): React.JSX.Element {
-  return (
-    <View>
-      <Text>
-        {title}
-      </Text>
-      {children}
-    </View>
-  );
-}
-
-function Paragraph({text}: ParagraphProps): React.JSX.Element {
-  return (
-    <Text>
-      {text}
-    </Text>
-  )
-}
-
 function App(): React.JSX.Element {
+  const [text, onChangeText] = useState('');
 
   return (
     <SafeAreaView>
-      <Title title='Hello Word!'>
-          <Paragraph text='Lorem'></Paragraph>
-      </Title>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeText}
+        placeholder="Write your task"
+        value={text}
+      />
     </SafeAreaView>
   );
-}
+};
 
 export default App;
