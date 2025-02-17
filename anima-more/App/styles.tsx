@@ -1,10 +1,15 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
+    container:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 20,
         padding: 10,
+        margin:  15,
+    },
+    input:{
+        width: 200,
+        borderWidth: 1,
     },
 });
