@@ -7,37 +7,36 @@
  */
 
 import {
-  Alert,
-  Button,
   SafeAreaView,
-  TextInput,
 } from 'react-native';
-import { styles } from './styles';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
+import { AddTask } from './src/AddTask';
+import { TodoWrapper } from './src/TodoWrapper/TodoWrapper';
 
-function onPressAdd(){
-  Alert.alert('I`m presed');
-}
+type todoProps = PropsWithChildren<{
+    id: number,
+    text: string
+}>
 
 function App(): React.JSX.Element {
 
-  const [text, onChangeText] = React.useState('');
+  const [todo, setTodo] = React.useState<todoProps[]>([]);
+  function addTask(id: number, text: string){
+    setTodo(
+      [
+        ...todo,
+        {
+          id: id,
+          text: text,
+        },
+      ]
+    );
+  }
 
   return (
     <SafeAreaView>
-        <SafeAreaView style={styles.container}>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeText}
-            placeholder="Write your task"
-            value={text}
-          />
-          <Button
-            onPress={onPressAdd}
-            title='Add task'
-            color='#a6a6a6'
-          />
-        </SafeAreaView>
+      <AddTask addTask={addTask}/>
+      <TodoWrapper todo={todo}/>
     </SafeAreaView>
   );
 }
