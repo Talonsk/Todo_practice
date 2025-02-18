@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import {SafeAreaView, Text } from "react-native";
+import { styles } from "../../styles";
 
 type itemProps = PropsWithChildren<{
     id: number,
@@ -8,7 +9,7 @@ type itemProps = PropsWithChildren<{
 
 export const TodoItem = ({id, text}: itemProps) =>{
     return(
-        <SafeAreaView>
+        <SafeAreaView style={styles.item}>
             <Text>{id}</Text>
             <Text>{text}</Text>
         </SafeAreaView>

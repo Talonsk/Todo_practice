@@ -20,6 +20,7 @@ export const AddTask = ({addTask}: functionProps) =>{
     function onPressAdd(){
         setId(i => i + 1);
         addTask(id, text);
+        onChangeText('');
     }
 
     return(

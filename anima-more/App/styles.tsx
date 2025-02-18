@@ -12,4 +12,11 @@ export const styles = StyleSheet.create({
         width: 200,
         borderWidth: 1,
     },
+    item:{
+        flexDirection: 'row',
+        gap: 10,
+        padding: 10,
+        margin: 5,
+        borderWidth: 1,
+    },
 });
