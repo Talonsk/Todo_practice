@@ -1,2 +1,0 @@
-C:\Users\vedga\AppData\Local\Android\Sdk
-C:\Users\vedga\AppData\Local\Android\Sdk\platform-tools
