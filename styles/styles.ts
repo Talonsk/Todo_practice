@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     },
     input:{
         width: 200,
+        height: 40,
         borderWidth: 1,
     },
     item:{
