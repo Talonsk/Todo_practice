@@ -5,46 +5,34 @@
  * @format
  */
 
-import {
-  SafeAreaView,
-} from 'react-native';
-import React, {useState } from 'react';
-import { AddTask } from './src/AddTask/AddTask';
-import { TodoWrapper } from './src/TodoWrapper/TodoWrapper';
-import { TodoContext } from './src/Context/TodoContext';
+import React from 'react';
+import { TodoList } from './src/TodoList/TodoList';
+import { Form } from './src/Form/Form';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStaticNavigation, StaticParamList } from '@react-navigation/native';
 
-type TodoProps = {
-  id: number,
-  text: string
+const RootStack = createNativeStackNavigator({
+  initialRouteName: 'Form',
+  screens: {
+    Todo: TodoList,
+    Form: Form,
+  },
+});
+
+type RootStackParamList = StaticParamList<typeof RootStack>;
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
 }
+
+const Navigation = createStaticNavigation(RootStack);
 
 function App(): React.JSX.Element {
 
-  const [todo, setTodo] = useState<TodoProps[]>([]);
-  const addTask = (id: number, text: string) => {
-    setTodo(
-      [
-        ...todo,
-        {
-          id: id,
-          text: text,
-        },
-      ]
-    );
-  };
-  const deliteTask = (id: number) =>{
-    setTodo(
-      todo.filter(e => e.id !== id )
-    );
-  };
-
   return (
-    <SafeAreaView>
-      <TodoContext.Provider value={{addTask, deliteTask}}>
-        <AddTask/>
-        <TodoWrapper todo={todo}/>
-      </TodoContext.Provider>
-    </SafeAreaView>
+    <Navigation />
   );
 }
 
