@@ -1,14 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { FC, useState } from 'react';
 import { Button, View, Text } from 'react-native';
-import { styles } from '../../../../styles/styles';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { useTodo } from '../../Context/TodoContext';
-
-type ItemProps = {
-    id: number,
-    text: string
-}
+import { ItemProps } from './types';
+import { styles } from './style';
 
 export const TodoItem: FC<ItemProps> = ({ id, text }) => {
 

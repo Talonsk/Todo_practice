@@ -1,76 +1,85 @@
-/* eslint-disable no-lone-blocks */
-import React, { FC } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+/* eslint-disable no-sequences */
+import React, { useEffect } from 'react';
+import { Button, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { style } from './FormStyle';
-import { Control, Controller, FieldErrors, useForm } from 'react-hook-form';
-
-type Inputs = {
-    login: string,
-    password: string,
-}
-
-type ControlProps = {
-    control: Control<Inputs, any>,
-    errors: FieldErrors<Inputs>,
-    name: 'login' | 'password',
-    rules: {},
-    placeholder: string
-}
-
-// console.log(String({...Inputs}.keys));
-
-const ControlForm: FC<ControlProps> = ({ control, errors, name, rules, placeholder }) => {
-
-    return (
-        <>
-            <Controller
-                name={name}
-                control={control}
-                rules={{ ...rules }}
-                render={({ field: { onChange, value } }) => (
-                    <TextInput
-                        style={[
-                            style.form,
-                            errors[name] ? style.form_error : {},
-                        ]}
-                        placeholder={placeholder}
-                        onChangeText={onChange}
-                        value={value}
-                    />
-                )}
-            />
-            {
-                errors[name]
-                &&
-                <Text style={style.error_text}>
-                    {errors[name]?.message}
-                </Text>
-            }
-        </>
-
-    );
-};
+import { useForm } from 'react-hook-form';
+import { ControlerInput } from './Controller/ControlerInput';
+import { Inputs } from './types';
+import { styles } from './style';
 
 export const Form = () => {
     const navigation = useNavigation();
+    const {
+        control,
+        handleSubmit,
+        watch,
+        setError,
+        clearErrors,
+        formState: { errors },
+    } = useForm<Inputs>();
 
-    const { control, handleSubmit, formState: { errors } } = useForm<Inputs>();
     const onSubmit = (data: Inputs) => {
-        console.log(data);
+
         if (data.login === 'admin' && data.password === '1234') {
             navigation.navigate('Todo');
         }
         else {
-            console.error('Invalid name or password');
-            console.log(errors);
+            setError('root', {
+                type: 'invalid',
+                message: 'Invalid name or password',
+            });
         }
     };
 
+    useEffect(() => {
+        const subscription = watch(() => {
+            clearErrors('root');
+        });
+        return () => subscription.unsubscribe();
+    }), [watch];
+
+    const onFocus = (name: keyof Inputs) => {
+        clearErrors(name);
+        clearErrors('root');
+    };
+
     return (
-        <View>
-            <ControlForm {...{ control, errors, name: 'login', rules: { required: 'Login is requred folder' }, placeholder: 'Login' }} />
-            <ControlForm {...{ control, errors, name: 'password', rules: { required: 'Password is requred folder' }, placeholder: 'Password' }} />
+        <View style={styles.container}>
+            <ControlerInput {...{
+                control, errors,
+                name: 'login',
+                placeholder: 'Login',
+                onFocus: onFocus,
+                rules: {
+                    required: 'Login is requred folder',
+                },
+                param: {
+                    autoComplete: 'email',
+                    inputMode: 'text',
+                },
+            }}
+            />
+            <ControlerInput {...{
+                control, errors,
+                name: 'password',
+                placeholder: 'Password',
+                onFocus: onFocus,
+                rules: {
+                    required: 'Password is requred folder',
+                },
+                param: {
+                    secureTextEntry: true,
+                    autoComplete: 'new-password',
+                    inputMode: 'text',
+                },
+            }}
+            />
+            {
+                errors.root &&
+                <Text style={styles.error_text}>
+                    {errors.root?.message}
+                </Text>
+            }
             <Button
                 title="Log in"
                 onPress={handleSubmit(onSubmit)}

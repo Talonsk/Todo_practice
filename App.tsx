@@ -6,10 +6,10 @@
  */
 
 import React from 'react';
-import { TodoList } from './src/TodoList/TodoList';
-import { Form } from './src/Form/Form';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStaticNavigation, StaticParamList } from '@react-navigation/native';
+import { TodoList } from './src/TodoList/TodoList';
+import { Form } from './src/Form/Form';
 
 const RootStack = createNativeStackNavigator({
   initialRouteName: 'Form',

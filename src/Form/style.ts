@@ -1,15 +1,20 @@
 import { StyleSheet } from 'react-native';
 
-export const style = StyleSheet.create({
+export const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'column',
+        gap: 10,
+        margin: 15,
+    },
     form: {
-        margin: 10,
         borderWidth: 1,
+        padding: 10,
     },
     form_error: {
         borderColor: 'red',
     },
     error_text: {
-        margin: 10,
+        marginLeft: 10,
         marginTop: -2,
         color: 'red',
     },

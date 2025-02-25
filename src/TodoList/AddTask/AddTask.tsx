@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, View, TextInput } from 'react-native';
-import { styles } from '../../../styles/styles';
 import { useTodo } from '../Context/TodoContext';
+import { styles } from './style';
 
 export const AddTask = () => {
     const [id, setId] = useState(1);

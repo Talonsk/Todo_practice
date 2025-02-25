@@ -1,22 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { createContext, useContext, useState, FC, ReactNode } from 'react';
+import { createContext, useContext, useState, FC } from 'react';
+import { ContextProps, ChildrenProps, TodoProps } from './types';
 
-type ChildrenProps = {
-    children: ReactNode
-}
-
-type ContextProps = {
-    todo: TodoProps[],
-    addTask:
-    (id: number, text: string) => void,
-    deliteTask:
-    (id: number) => void
-}
-
-type TodoProps = {
-    id: number,
-    text: string
-}
 
 const TodoContext = createContext<ContextProps>({
     todo: [{id: 0, text:''}],
