@@ -2,15 +2,16 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { AddTask } from './AddTask/AddTask';
 import { TodoWrapper } from './TodoWrapper/TodoWrapper';
-import { TodoProvared } from './Context/TodoContext';
+import { TodoFunctions } from './Context/TodoContext';
 
 export const TodoList = () => {
+
+    const {todo, addTask, deliteTask} = TodoFunctions();
+
     return (
         <SafeAreaView>
-            <TodoProvared>
-                <AddTask />
-                <TodoWrapper />
-            </TodoProvared>
+            <AddTask addTask={addTask}/>
+            <TodoWrapper todo={todo} deliteTask={deliteTask}/>
         </SafeAreaView>
 
     );

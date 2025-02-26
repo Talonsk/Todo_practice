@@ -1,4 +1,6 @@
 export type ItemProps = {
     id: number,
-    text: string
-}
+    text: string,
+    deliteTask:
+    (id: number) => void
+};

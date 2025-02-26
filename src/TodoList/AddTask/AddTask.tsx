@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Button, View, TextInput } from 'react-native';
-import { useTodo } from '../Context/TodoContext';
+import { FunctionProps } from './types';
 import { styles } from './style';
 
-export const AddTask = () => {
+export const AddTask: FC<FunctionProps> = ({ addTask }) => {
     const [id, setId] = useState(1);
     const [text, onChangeText] = useState('');
-    const { addTask } = useTodo();
 
     const onPressAdd = () => {
         if (text !== '') {

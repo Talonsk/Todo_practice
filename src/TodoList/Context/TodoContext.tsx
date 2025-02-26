@@ -1,17 +1,8 @@
-/* eslint-disable react/react-in-jsx-scope */
-import { createContext, useContext, useState, FC } from 'react';
-import { ContextProps, ChildrenProps, TodoProps } from './types';
+import { useState } from 'react';
+import { TodoProps } from './types';
 
-
-const TodoContext = createContext<ContextProps>({
-    todo: [{id: 0, text:''}],
-    addTask() { },
-    deliteTask() { },
-});
-
-export const TodoProvared: FC<ChildrenProps> = ({children}) => {
+export const TodoFunctions = () => {
     const [todo, setTodo] = useState<TodoProps[]>([]);
-
     const addTask = (id: number, text: string) => {
         setTodo(
             [
@@ -29,11 +20,10 @@ export const TodoProvared: FC<ChildrenProps> = ({children}) => {
         );
     };
 
-    return (
-        <TodoContext.Provider value={{todo, addTask, deliteTask }}>
-            {children}
-        </TodoContext.Provider>
-    );
-};
+    return({
+        todo,
+        addTask,
+        deliteTask,
+    });
 
-export  const useTodo = () => useContext(TodoContext);
+};

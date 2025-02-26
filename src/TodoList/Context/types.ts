@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { ReactNode } from 'react';
 
 export type ChildrenProps = {
@@ -16,3 +17,9 @@ export type TodoProps = {
     id: number,
     text: string
 }
+=======
+export type TodoProps = {
+    id: number,
+    text: string
+};
+>>>>>>> without-context
