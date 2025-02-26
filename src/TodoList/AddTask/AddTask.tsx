@@ -3,14 +3,13 @@ import {
     View,
     TextInput,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { styles } from '../../../styles/styles';
-import { TodoFunctions } from '../Context/TodoContext';
+import { FunctionProps } from './types';
 
-export const AddTask = () => {
+export const AddTask: FC<FunctionProps> = ({addTask}) => {
     const [id, setId] = useState(1);
     const [text, onChangeText] = useState('');
-    const { addTask } = TodoFunctions();
 
     const onPressAdd = () => {
         if (text !== '') {

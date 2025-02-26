@@ -1,16 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View } from 'react-native';
 import { TodoItem } from './TodoItem/TodoItem';
-import { TodoFunctions } from '../Context/TodoContext';
+import { WrapperProps } from './types';
 
-
-export const TodoWrapper = () => {
-    const { todo } = TodoFunctions();
-
-    return (
+export const TodoWrapper: FC<WrapperProps> = ({todo, deliteTask}) =>{
+    return(
         <View>
             {todo.map((e) => {
-                return <TodoItem key={e.id} id={e.id} text={e.text} />;
+                return <TodoItem key={e.id} id={e.id} text={e.text} deliteTask={deliteTask}/>;
             })}
         </View>
     );

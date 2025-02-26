@@ -3,16 +3,10 @@ import React, { FC, useState } from 'react';
 import { Button, View, Text } from 'react-native';
 import { styles } from '../../../../styles/styles';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import { TodoFunctions } from '../../Context/TodoContext';
+import { ItemProps } from './types';
 
-type ItemProps = {
-    id: number,
-    text: string
-}
+export const TodoItem: FC<ItemProps> = ({ id, text, deliteTask }) => {
 
-export const TodoItem: FC<ItemProps> = ({ id, text }) => {
-
-    const { deliteTask } = TodoFunctions();
     const [localChecked, setLocalChecked] = useState(false);
 
     return (
