@@ -11,6 +11,7 @@ export const TodoWrapper: FC<WrapperProps> = ({todo, deliteTask}) =>{
                 renderItem={({item}) =>
                 <TodoItem id={item.id} text={item.text} isChecked={item.isChecked} deliteTask={deliteTask}/>}
                 keyExtractor={item => 'id' + item.id}
+                keyboardShouldPersistTaps="handled"
             />
         </View>
     );

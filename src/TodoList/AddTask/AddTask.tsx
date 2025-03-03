@@ -12,6 +12,8 @@ export const AddTask: FC<FunctionProps> = ({todo, addTask}) => {
         if(todo.length !== 0){
             const lastId = todo[todo.length - 1].id;
             setId(lastId + 1);
+        }else{
+            setId(1);
         }
     }, [todo]);
 
