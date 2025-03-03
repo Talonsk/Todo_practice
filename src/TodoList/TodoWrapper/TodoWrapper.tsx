@@ -9,7 +9,7 @@ export const TodoWrapper: FC<WrapperProps> = ({todo, deliteTask}) =>{
             <FlatList
                 data={todo}
                 renderItem={({item}) =>
-                <TodoItem id={item.id} text={item.text} deliteTask={deliteTask}/>}
+                <TodoItem id={item.id} text={item.text} isChecked={item.isChecked} deliteTask={deliteTask}/>}
                 keyExtractor={item => 'id' + item.id}
             />
         </View>

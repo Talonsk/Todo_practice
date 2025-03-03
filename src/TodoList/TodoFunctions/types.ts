@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { ReactNode } from 'react';
 
 export type ChildrenProps = {
@@ -15,11 +14,18 @@ export type ContextProps = {
 
 export type TodoProps = {
     id: number,
-    text: string
+    text: string,
+    isChecked: boolean
 }
-=======
-export type TodoProps = {
-    id: number,
-    text: string
+
+var array = [{id: 1, text: 'adsas'}, {id: 2, text: 'kg'}];
+console.log(array);
+
+type DataErrors = 'data' | 'errors';
+
+export type JsonProps = {
+    [key in DataErrors]: TodoProps[];
+} & {
+    code: number;
+    message: string;
 };
->>>>>>> without-context

@@ -5,9 +5,9 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { ItemProps } from './types';
 import { styles } from './style';
 
-export const TodoItem: FC<ItemProps> = ({ id, text, deliteTask }) => {
+export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask }) => {
 
-    const [localChecked, setLocalChecked] = useState(false);
+    const [localChecked, setLocalChecked] = useState(isChecked);
 
     return (
         <View style={styles.item}>

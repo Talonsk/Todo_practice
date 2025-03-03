@@ -1,16 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
 import { AddTask } from './AddTask/AddTask';
 import { TodoWrapper } from './TodoWrapper/TodoWrapper';
-import { TodoFunctions } from './Context/TodoContext';
+import { TodoFunctions } from './TodoFunctions/TodoFunctions';
 
 export const TodoList = () => {
 
-    const {todo, addTask, deliteTask} = TodoFunctions();
+    const {
+        todo,
+        setTodo,
+        addTask,
+        deliteTask,
+        getTaskAPI,
+    } = TodoFunctions();
+
+    useEffect( () => {
+        async function fetchData() {
+            const newTodo = await getTaskAPI();
+            if (newTodo){
+                setTodo([
+                    ...newTodo,
+                ]);
+            }
+        }
+
+        fetchData();
+
+    }, [getTaskAPI, setTodo]);
 
     return (
         <SafeAreaView>
-            <AddTask addTask={addTask}/>
+            <AddTask todo={todo} addTask={addTask}/>
             <TodoWrapper todo={todo} deliteTask={deliteTask}/>
         </SafeAreaView>
 

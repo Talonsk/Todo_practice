@@ -1,16 +1,24 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Button, View, TextInput } from 'react-native';
 import { FunctionProps } from './types';
 import { styles } from './style';
 
-export const AddTask: FC<FunctionProps> = ({ addTask }) => {
+export const AddTask: FC<FunctionProps> = ({todo, addTask}) => {
+
     const [id, setId] = useState(1);
     const [text, onChangeText] = useState('');
+
+    useEffect(() => {
+        if(todo.length !== 0){
+            const lastId = todo[todo.length - 1].id;
+            setId(lastId + 1);
+        }
+    }, [todo]);
 
     const onPressAdd = () => {
         if (text !== '') {
             setId(i => i + 1);
-            addTask(id, text);
+            addTask(id, text, false);
             onChangeText('');
         }
     };

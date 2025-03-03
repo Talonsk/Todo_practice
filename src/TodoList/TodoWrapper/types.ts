@@ -1,7 +1,8 @@
 export type WrapperProps = {
     todo: {
         id: number,
-        text: string
+        text: string,
+        isChecked: boolean
     }[]
     deliteTask:
     (id: number) => void
