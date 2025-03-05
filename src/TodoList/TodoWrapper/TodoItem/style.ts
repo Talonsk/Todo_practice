@@ -12,12 +12,21 @@ export const styles = StyleSheet.create({
     },
     item_text:{
         flexDirection: 'row',
-        height: 30,
+        height: 40,
         width: 250,
         gap: 10,
     },
     text:{
-        lineHeight: 30,
+        lineHeight: 40,
         textAlign: 'center',
+    },
+    text_input:{
+        height: 40,
+        width: 250,
+        padding: 0,
+    },
+    button_container: {
+        flexDirection: 'row',
+        gap: 5,
     },
 });

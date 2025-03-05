@@ -29,6 +29,7 @@ export const AddTask: FC<FunctionProps> = ({todo, addTask}) => {
         <View style={styles.container}>
             <TextInput
                 style={styles.input}
+                onSubmitEditing={onPressAdd}
                 onChangeText={onChangeText}
                 placeholder="Write your task"
                 value={text}

@@ -1,23 +1,18 @@
 import { useCallback, useState } from 'react';
-import { JsonProps, TodoProps } from './types';
+import { TodoProps, UpdateProps } from './types';
+import axios from 'axios';
+const url = 'gjgjdf007y.temp.swtest.ru';
 
 export const TodoFunctions = () => {
     const addTaskAPI = async ({id, text, isChecked}: TodoProps) => {
         try {
-            const response = await fetch('http://f1093629.xsph.ru/addTask/', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
+            const response = await axios.post(`http://${url}/addTask/`, {
                     id: id,
                     text: text,
                     isChecked: isChecked,
-                }),
-            });
-
-            const json = await response.json();
+                },
+            );
+            const json = response.data;
 
             if(json.data){
                 setTodo(
@@ -35,8 +30,15 @@ export const TodoFunctions = () => {
     };
     const getTaskAPI = useCallback( async (id : string | number = '') => {
         try {
-            const response = await fetch(`http://f1093629.xsph.ru/getTask/?${id}`);
-            const json: JsonProps = await response.json();
+            const response = await axios.get(`http://${url}/getTask/${id}`);
+            const json = response.data;
+
+            // await new Promise(resolve => {
+            //     setTimeout(resolve, 3000);
+            // });
+            // for(let i = 0; i <= 10000; i++){
+            //     console.log(i);
+            // }
 
             if(json.data){
                 return json.data;
@@ -45,14 +47,14 @@ export const TodoFunctions = () => {
             }
         } catch (error) {
             console.log(error);
+        }finally{
+            setLoading(false);
         }
     }, []);
     const deleteTaskAPI = async (id: number) => {
         try {
-            const response = await fetch(`http://f1093629.xsph.ru/deleteTask/${id}`, {
-                method: 'DELETE',
-            });
-            const json = await response.json();
+            const response = await axios.delete(`http://${url}/deleteTask/${id}`);
+            const json = response.data;
 
             if(json.data){
                 const del_id = Number(json.data.id);
@@ -66,8 +68,36 @@ export const TodoFunctions = () => {
             console.log(error);
         }
     };
+    const updateTaskAPI = async (id: UpdateProps['id'], parametrs: UpdateProps['parametrs']) => {
+        try {
+            const response = await axios.patch(`http://${url}/updateTask/${id}`, {
+                    id: parametrs.id,
+                    text: parametrs.text,
+                    isChecked: parametrs.isChecked,
+                },
+            );
+            const json = response.data;
+
+            if(json.data){
+                setTodo(
+                    todo.map(e => {
+                        if(e.id === id){
+                            return {...e, ...json.data};
+                        }else{
+                            return e;
+                        }
+                    })
+                );
+            }else{
+                console.error(json.errors);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const [todo, setTodo] = useState<TodoProps[]>([]);
+    const [isLoading, setLoading] = useState(true);
 
     const addTask = (id: number, text: string, isChecked: boolean ) => {
         addTaskAPI({id, text, isChecked});
@@ -78,10 +108,12 @@ export const TodoFunctions = () => {
 
     return ({
         todo,
+        isLoading,
         setTodo,
         addTask,
-        deliteTask,
         getTaskAPI,
+        deliteTask,
+        updateTaskAPI,
     });
 
 };

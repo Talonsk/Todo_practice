@@ -18,8 +18,14 @@ export type TodoProps = {
     isChecked: boolean
 }
 
-var array = [{id: 1, text: 'adsas'}, {id: 2, text: 'kg'}];
-console.log(array);
+export type UpdateProps = {
+    id: number,
+    parametrs: {
+        id?: number,
+        text?: string,
+        isChecked?: boolean
+    }
+}
 
 type DataErrors = 'data' | 'errors';
 

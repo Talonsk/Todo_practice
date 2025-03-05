@@ -3,15 +3,18 @@ import { SafeAreaView } from 'react-native';
 import { AddTask } from './AddTask/AddTask';
 import { TodoWrapper } from './TodoWrapper/TodoWrapper';
 import { TodoFunctions } from './TodoFunctions/TodoFunctions';
+import { Loading } from './Loading/Loading';
 
 export const TodoList = () => {
 
     const {
         todo,
+        isLoading,
         setTodo,
         addTask,
-        deliteTask,
         getTaskAPI,
+        deliteTask,
+        updateTaskAPI,
     } = TodoFunctions();
 
     useEffect( () => {
@@ -30,8 +33,12 @@ export const TodoList = () => {
 
     return (
         <SafeAreaView>
-            <AddTask todo={todo} addTask={addTask}/>
-            <TodoWrapper todo={todo} deliteTask={deliteTask}/>
+            {isLoading ? <Loading/> :
+                <>
+                    <AddTask todo={todo} addTask={addTask} />
+                    <TodoWrapper todo={todo} deliteTask={deliteTask} updateTaskAPI={updateTaskAPI}/>
+                </>
+            }
         </SafeAreaView>
 
     );

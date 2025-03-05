@@ -1,13 +1,23 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { FC, useState } from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View, Text, TextInput } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { ItemProps } from './types';
 import { styles } from './style';
 
-export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask }) => {
+export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask, updateTaskAPI }) => {
 
+    const [itemText, setText] = useState(text);
     const [localChecked, setLocalChecked] = useState(isChecked);
+    const [isChenge, setChenge] = useState(false);
+
+    const updateTask = () => {
+        itemText ? setChenge(!isChenge) : {};
+        if (isChenge && text.trim() !== itemText.trim()){
+            updateTaskAPI(id, {text: itemText});
+        }
+        setText(itemText.trim());
+    };
 
     return (
         <View style={styles.item}>
@@ -20,14 +30,34 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask }) => 
                 />
                 <Text style={styles.text}>{id}</Text>
                 <Text style={styles.text}>
-                    <Text style={{ textDecorationLine: localChecked ? 'line-through' : 'none' }}>{text}</Text>
+                {isChenge ?
+                    <TextInput
+                        style={styles.text_input}
+                        onChangeText={(changeText)=>{setText(changeText);}}
+                        onSubmitEditing={updateTask}
+                        autoFocus={true}
+                        placeholder="Text cannot be empty"
+                        value={itemText}
+                    />
+                    :
+                        <Text style={{ textDecorationLine: localChecked ? 'line-through' : 'none' }}>
+                            {itemText}
+                        </Text>
+                }
                 </Text>
             </View>
-            <Button
-                onPress={() => deliteTask(id)}
-                title="✕"
-                color="#ff3433"
-            />
+            <View style={styles.button_container}>
+                <Button
+                    onPress={updateTask}
+                    title={isChenge ? '✓' : '✍'}
+                    color={isChenge ? '#34c924' : '#2296f3'}
+                />
+                <Button
+                    onPress={() => deliteTask(id)}
+                    title="✕"
+                    color="#ff3433"
+                />
+            </View>
         </View>
     );
 };
