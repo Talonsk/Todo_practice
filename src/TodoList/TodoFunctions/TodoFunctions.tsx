@@ -33,15 +33,10 @@ export const TodoFunctions = () => {
             const response = await axios.get(`http://${url}/getTask/${id}`);
             const json = response.data;
 
-            // await new Promise(resolve => {
-            //     setTimeout(resolve, 3000);
-            // });
-            // for(let i = 0; i <= 10000; i++){
-            //     console.log(i);
-            // }
-
             if(json.data){
-                return json.data;
+                setTodo([
+                    ...json.data,
+                ]);
             }else{
                 console.error(json.errors);
             }
@@ -58,9 +53,8 @@ export const TodoFunctions = () => {
 
             if(json.data){
                 const del_id = Number(json.data.id);
-                setTodo(
-                    todo.filter(e => e.id !== del_id)
-                );
+                setTodo(todo.filter(e => e.id !== del_id));
+
             }else{
                 console.error(json.errors);
             }
@@ -79,20 +73,29 @@ export const TodoFunctions = () => {
             const json = response.data;
 
             if(json.data){
-                setTodo(
-                    todo.map(e => {
+                setTodo((t) => {
+                    return t.map(e => {
                         if(e.id === id){
                             return {...e, ...json.data};
                         }else{
                             return e;
                         }
-                    })
-                );
+                    });
+                });
             }else{
                 console.error(json.errors);
             }
         } catch (error) {
             console.log(error);
+        }
+    };
+
+    const updateId = async () => {
+        const maxId = todo.length;
+        for(let i = 0; i <= maxId; i++){
+            if (todo[i].id !== i + 1){
+                await updateTaskAPI(todo[i].id, {id: i + 1});
+            }
         }
     };
 
@@ -114,6 +117,7 @@ export const TodoFunctions = () => {
         getTaskAPI,
         deliteTask,
         updateTaskAPI,
+        updateId,
     });
 
 };

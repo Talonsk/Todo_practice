@@ -10,26 +10,23 @@ export const TodoList = () => {
     const {
         todo,
         isLoading,
-        setTodo,
+        // setTodo,
         addTask,
         getTaskAPI,
         deliteTask,
         updateTaskAPI,
+        updateId,
     } = TodoFunctions();
 
-    useEffect( () => {
-        async function fetchData() {
-            const newTodo = await getTaskAPI();
-            if (newTodo){
-                setTodo([
-                    ...newTodo,
-                ]);
-            }
+    useEffect(() => {
+        async function fetchData(){
+            await getTaskAPI();
         }
-
         fetchData();
-
-    }, [getTaskAPI, setTodo]);
+    }, [getTaskAPI]);
+    useEffect(() =>{
+        updateId();
+    });
 
     return (
         <SafeAreaView>
@@ -37,6 +34,10 @@ export const TodoList = () => {
                 <>
                     <AddTask todo={todo} addTask={addTask} />
                     <TodoWrapper todo={todo} deliteTask={deliteTask} updateTaskAPI={updateTaskAPI}/>
+                    {/* <Button
+                        onPress={updateId}
+                        title='update id'
+                    /> */}
                 </>
             }
         </SafeAreaView>
