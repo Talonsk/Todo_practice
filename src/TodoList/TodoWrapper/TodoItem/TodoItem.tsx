@@ -10,6 +10,8 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask, updat
     const [itemText, setText] = useState(text);
     const [localChecked, setLocalChecked] = useState(isChecked);
     const [isChenge, setChenge] = useState(false);
+    const [isDelite, setDelite] = useState(false);
+    const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
 
     const updateTask = () => {
         itemText ? setChenge(!isChenge) : {};
@@ -17,6 +19,19 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask, updat
             updateTaskAPI(id, {text: itemText});
         }
         setText(itemText.trim());
+    };
+
+    const onButtonDelitePress = () => {
+        setDelite(!isDelite);
+        if (!isDelite){
+            setTimeoutId(
+                setTimeout(async () => {
+                    deliteTask(id);
+                }, 5000)
+            );
+        }else{
+            clearTimeout(timeoutId);
+        }
     };
 
     return (
@@ -53,9 +68,9 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask, updat
                     color={isChenge ? '#34c924' : '#2296f3'}
                 />
                 <Button
-                    onPress={() => deliteTask(id)}
-                    title="✕"
-                    color="#ff3433"
+                    onPress={onButtonDelitePress}
+                    title={isDelite ? '↩' : '✕' }
+                    color={isDelite ? '#a6a6a6' : '#ff3433'}
                 />
             </View>
         </View>

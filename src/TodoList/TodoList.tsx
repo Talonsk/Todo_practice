@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
 import { AddTask } from './AddTask/AddTask';
@@ -10,7 +11,6 @@ export const TodoList = () => {
     const {
         todo,
         isLoading,
-        // setTodo,
         addTask,
         getTaskAPI,
         deliteTask,
@@ -24,20 +24,21 @@ export const TodoList = () => {
         }
         fetchData();
     }, [getTaskAPI]);
-    useEffect(() =>{
-        updateId();
-    });
+    useEffect(() =>{updateId();});
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
             {isLoading ? <Loading/> :
                 <>
-                    <AddTask todo={todo} addTask={addTask} />
-                    <TodoWrapper todo={todo} deliteTask={deliteTask} updateTaskAPI={updateTaskAPI}/>
-                    {/* <Button
-                        onPress={updateId}
-                        title='update id'
-                    /> */}
+                    <AddTask
+                        todo={todo}
+                        addTask={addTask}
+                    />
+                    <TodoWrapper
+                        todo={todo}
+                        deliteTask={deliteTask}
+                        updateTaskAPI={updateTaskAPI}
+                    />
                 </>
             }
         </SafeAreaView>

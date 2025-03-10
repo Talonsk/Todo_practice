@@ -1,23 +1,16 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { FC } from 'react';
-import { FlatList, View } from 'react-native';
-import { TodoItem } from './TodoItem/TodoItem';
+import { View } from 'react-native';
 import { WrapperProps } from './types';
+import { Pagination } from './Pagination/Pagination';
 
 export const TodoWrapper: FC<WrapperProps> = ({todo, deliteTask, updateTaskAPI}) =>{
     return(
-        <View>
-            <FlatList
-                data={todo}
-                renderItem={({item}) =>
-                <TodoItem
-                    id={item.id}
-                    text={item.text}
-                    isChecked={item.isChecked}
-                    deliteTask={deliteTask}
-                    updateTaskAPI={updateTaskAPI}
-                />}
-                keyExtractor={item => 'id' + item.id}
-                keyboardShouldPersistTaps="handled"
+        <View style={{flex: 1}}>
+            <Pagination
+                todo={todo}
+                deliteTask={deliteTask}
+                updateTaskAPI={updateTaskAPI}
             />
         </View>
     );

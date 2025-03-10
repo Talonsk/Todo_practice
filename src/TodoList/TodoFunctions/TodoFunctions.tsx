@@ -48,16 +48,16 @@ export const TodoFunctions = () => {
     }, []);
     const deleteTaskAPI = async (id: number) => {
         try {
-            const response = await axios.delete(`http://${url}/deleteTask/${id}`);
-            const json = response.data;
+                    const response = await axios.delete(`http://${url}/deleteTask/${id}`);
+                    const json = response.data;
 
-            if(json.data){
-                const del_id = Number(json.data.id);
-                setTodo(todo.filter(e => e.id !== del_id));
+                    if(json.data){
+                        const del_id = Number(json.data.id);
+                        setTodo(todo.filter(e => e.id !== del_id));
 
-            }else{
-                console.error(json.errors);
-            }
+                    }else{
+                        console.error(json.errors);
+                    }
         } catch (error) {
             console.log(error);
         }
@@ -112,7 +112,6 @@ export const TodoFunctions = () => {
     return ({
         todo,
         isLoading,
-        setTodo,
         addTask,
         getTaskAPI,
         deliteTask,
