@@ -8,6 +8,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStaticNavigation, StaticParamList } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TodoList } from './src/TodoList/TodoList';
 import { Form } from './src/Form/Form';
 
@@ -32,7 +33,9 @@ const Navigation = createStaticNavigation(RootStack);
 function App(): React.JSX.Element {
 
   return (
-    <Navigation />
+    <GestureHandlerRootView>
+      <Navigation />
+    </GestureHandlerRootView>
   );
 }
 

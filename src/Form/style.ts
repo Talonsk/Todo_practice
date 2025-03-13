@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
         gap: 10,
         padding: 15,
         paddingTop: 200,
-        // backgroundColor: 'grey',
     },
     form: {
         padding: 10,

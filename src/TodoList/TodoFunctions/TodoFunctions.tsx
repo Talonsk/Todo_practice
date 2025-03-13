@@ -15,11 +15,12 @@ export const TodoFunctions = () => {
             const json = response.data;
 
             if(json.data){
-                setTodo(
-                    [
-                        ...todo,
+                setTodo(t => {
+                    return [
+                        ...t,
                         json.data,
-                    ]
+                    ];
+                }
                 );
             }else{
                 console.error(json.errors);
@@ -53,8 +54,7 @@ export const TodoFunctions = () => {
 
                     if(json.data){
                         const del_id = Number(json.data.id);
-                        setTodo(todo.filter(e => e.id !== del_id));
-
+                        setTodo(t => {return t.filter(e => e.id !== del_id);});
                     }else{
                         console.error(json.errors);
                     }
@@ -75,7 +75,7 @@ export const TodoFunctions = () => {
             if(json.data){
                 setTodo((t) => {
                     return t.map(e => {
-                        if(e.id === id){
+                    if(e.id === id){
                             return {...e, ...json.data};
                         }else{
                             return e;
@@ -102,21 +102,17 @@ export const TodoFunctions = () => {
     const [todo, setTodo] = useState<TodoProps[]>([]);
     const [isLoading, setLoading] = useState(true);
 
-    const addTask = (id: number, text: string, isChecked: boolean ) => {
-        addTaskAPI({id, text, isChecked});
-    };
-    const deliteTask = (id: number) => {
-        deleteTaskAPI(id);
-    };
-
     return ({
         todo,
         isLoading,
-        addTask,
+        addTaskAPI,
         getTaskAPI,
-        deliteTask,
+        deleteTaskAPI,
         updateTaskAPI,
         updateId,
     });
 
 };
+
+
+

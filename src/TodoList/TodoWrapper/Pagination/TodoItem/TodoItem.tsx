@@ -5,7 +5,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { ItemProps } from './types';
 import { styles } from './style';
 
-export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask, updateTaskAPI }) => {
+export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask, updateTask }) => {
 
     const [itemText, setText] = useState(text);
     const [localChecked, setLocalChecked] = useState(isChecked);
@@ -13,10 +13,10 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask, updat
     const [isDelite, setDelite] = useState(false);
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
 
-    const updateTask = () => {
+    const onButtonUpdatePress = () => {
         itemText ? setChenge(!isChenge) : {};
         if (isChenge && text.trim() !== itemText.trim()){
-            updateTaskAPI(id, {text: itemText});
+            updateTask(id, {text: itemText});
         }
         setText(itemText.trim());
     };
@@ -49,7 +49,7 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask, updat
                     <TextInput
                         style={styles.text_input}
                         onChangeText={(changeText)=>{setText(changeText);}}
-                        onSubmitEditing={updateTask}
+                        onSubmitEditing={onButtonUpdatePress}
                         autoFocus={true}
                         placeholder="Text cannot be empty"
                         value={itemText}
@@ -63,7 +63,7 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, deliteTask, updat
             </View>
             <View style={styles.button_container}>
                 <Button
-                    onPress={updateTask}
+                    onPress={onButtonUpdatePress}
                     title={isChenge ? '✓' : '✍'}
                     color={isChenge ? '#34c924' : '#2296f3'}
                 />

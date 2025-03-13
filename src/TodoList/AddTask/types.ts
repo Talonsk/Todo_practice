@@ -5,5 +5,11 @@ export type FunctionProps = {
         isChecked: boolean
     }[],
     addTask:
-        (id: number, text: string, isChecked: boolean ) => void,
+    ({ id, text, isChecked }: TodoProps) => Promise<void>
+};
+
+type TodoProps = {
+    id: number,
+    text: string,
+    isChecked: boolean
 };

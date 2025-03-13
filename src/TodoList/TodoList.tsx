@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { AddTask } from './AddTask/AddTask';
 import { TodoWrapper } from './TodoWrapper/TodoWrapper';
 import { TodoFunctions } from './TodoFunctions/TodoFunctions';
@@ -11,9 +11,9 @@ export const TodoList = () => {
     const {
         todo,
         isLoading,
-        addTask,
+        addTaskAPI,
         getTaskAPI,
-        deliteTask,
+        deleteTaskAPI,
         updateTaskAPI,
         updateId,
     } = TodoFunctions();
@@ -29,17 +29,17 @@ export const TodoList = () => {
     return (
         <SafeAreaView style={{flex: 1}}>
             {isLoading ? <Loading/> :
-                <>
+                <View style={{flex: 1}}>
                     <AddTask
                         todo={todo}
-                        addTask={addTask}
+                        addTask={addTaskAPI}
                     />
                     <TodoWrapper
                         todo={todo}
-                        deliteTask={deliteTask}
-                        updateTaskAPI={updateTaskAPI}
+                        deliteTask={deleteTaskAPI}
+                        updateTask={updateTaskAPI}
                     />
-                </>
+                </View>
             }
         </SafeAreaView>
 

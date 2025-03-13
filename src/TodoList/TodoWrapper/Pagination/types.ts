@@ -1,8 +1,8 @@
-export type WrapperProps = {
+export type PaginationProps = {
     todo: TodoProps[],
     deliteTask:
-    (id: number) => void,
-    updateTaskAPI:
+    (id: number) => Promise<void>,
+    updateTask:
     (id: UpdateProps['id'], parametrs: UpdateProps['parametrs']) => Promise<void>,
 };
 

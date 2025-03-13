@@ -5,9 +5,4 @@ export const styles = StyleSheet.create({
         flex: 1,
         paddingBottom: 10,
     },
-    button_container: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        gap: 5,
-    },
 });

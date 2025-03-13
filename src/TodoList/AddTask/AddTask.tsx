@@ -18,9 +18,10 @@ export const AddTask: FC<FunctionProps> = ({todo, addTask}) => {
     }, [todo]);
 
     const onPressAdd = () => {
+        const isChecked = false;
         if (text !== '') {
             setId(i => i + 1);
-            addTask(id, text, false);
+            addTask({id, text, isChecked});
             onChangeText('');
         }
     };
