@@ -6,17 +6,32 @@
  */
 
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStaticNavigation, StaticParamList } from '@react-navigation/native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import type { TransitionSpec } from './node_modules/@react-navigation/stack/src/types.tsx';
+import { createStackNavigator } from '@react-navigation/stack';
 import { TodoList } from './src/TodoList/TodoList';
 import { Form } from './src/Form/Form';
 
-const RootStack = createNativeStackNavigator({
+const configuration : TransitionSpec = {
+  animation: 'timing',
+  config: {
+    duration: 500,
+    easing: (duration) => duration / 3.5,
+  },
+};
+
+const RootStack = createStackNavigator({
   initialRouteName: 'Form',
   screens: {
-    Todo: TodoList,
-    Form: Form,
+    Todo:TodoList,
+    Form:  Form,
+  },
+  screenOptions: {
+    animation: 'fade_from_bottom',
+    transitionSpec: {
+      open: configuration,
+      close: configuration,
+    },
   },
 });
 
@@ -33,9 +48,7 @@ const Navigation = createStaticNavigation(RootStack);
 function App(): React.JSX.Element {
 
   return (
-    <GestureHandlerRootView>
-      <Navigation />
-    </GestureHandlerRootView>
+    <Navigation />
   );
 }
 
