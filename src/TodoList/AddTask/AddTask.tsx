@@ -6,7 +6,7 @@ import { styles } from './style';
 export const AddTask: FC<FunctionProps> = ({todo, addTask}) => {
 
     const [id, setId] = useState(1);
-    const [text, onChangeText] = useState('');
+    const [inputText, onChangeText] = useState('');
 
     useEffect(() => {
         if(todo.length !== 0){
@@ -19,6 +19,7 @@ export const AddTask: FC<FunctionProps> = ({todo, addTask}) => {
 
     const onPressAdd = () => {
         const isChecked = false;
+        const text = inputText.trim();
         if (text !== '') {
             setId(i => i + 1);
             addTask({id, text, isChecked});
@@ -33,7 +34,7 @@ export const AddTask: FC<FunctionProps> = ({todo, addTask}) => {
                 onSubmitEditing={onPressAdd}
                 onChangeText={onChangeText}
                 placeholder="Write your task"
-                value={text}
+                value={inputText}
             />
             <Button
                 onPress={onPressAdd}

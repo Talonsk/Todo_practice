@@ -15,7 +15,8 @@ export type ContextProps = {
 export type TodoProps = {
     id: number,
     text: string,
-    isChecked: boolean
+    isChecked: boolean,
+    image?: string
 }
 
 export type UpdateProps = {
@@ -24,6 +25,7 @@ export type UpdateProps = {
         id?: number,
         text?: string,
         isChecked?: boolean
+        image?: string
     }
 }
 

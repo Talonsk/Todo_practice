@@ -9,7 +9,8 @@ export type PaginationProps = {
 type TodoProps = {
     id: number,
     text: string,
-    isChecked: boolean
+    isChecked: boolean,
+    image?: string
 };
 
 type UpdateProps = {
@@ -17,6 +18,7 @@ type UpdateProps = {
     parametrs: {
         id?: number,
         text?: string,
-        isChecked?: boolean
+        isChecked?: boolean,
+        image?: string
     }
 };

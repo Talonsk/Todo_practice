@@ -15,6 +15,7 @@ export const PaginationButtons: FC<ButtonsProps> = ({page, maxPage, pagesArr, se
             {pagesArr.map(p => {
                 return (
                     <Button
+                        key={String(p)}
                         title={String(p)}
                         onPress={()=>setPage(p)}
                         color={page === p ? '#2262ff' : '#2296f3'}

@@ -5,4 +5,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         paddingBottom: 10,
     },
+    sortet_list:{
+        flex: 1,
+    },
 });

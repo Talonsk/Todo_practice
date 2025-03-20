@@ -6,6 +6,7 @@
  */
 
 import React from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { createStaticNavigation, StaticParamList } from '@react-navigation/native';
 import type { TransitionSpec } from './node_modules/@react-navigation/stack/src/types.tsx';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -48,7 +49,9 @@ const Navigation = createStaticNavigation(RootStack);
 function App(): React.JSX.Element {
 
   return (
-    <Navigation />
+    <GestureHandlerRootView>
+      <Navigation />
+    </GestureHandlerRootView>
   );
 }
 

@@ -2,8 +2,9 @@ export type ItemProps = {
     id: number,
     text: string,
     isChecked: boolean,
+    image?: string,
     deliteTask:
-    (id: number) => Promise<void>
+    (id: number) => Promise<void>,
     updateTask:
     (id: UpdateProps['id'], parametrs: UpdateProps['parametrs']) => Promise<void>
 };
@@ -13,6 +14,7 @@ type UpdateProps = {
     parametrs: {
         id?: number,
         text?: string,
-        isChecked?: boolean
+        isChecked?: boolean,
+        image?: string
     }
 };

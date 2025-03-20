@@ -6,11 +6,8 @@ const url = 'gjgjdf007y.temp.swtest.ru';
 export const TodoFunctions = () => {
     const addTaskAPI = async ({id, text, isChecked}: TodoProps) => {
         try {
-            const response = await axios.post(`http://${url}/addTask/`, {
-                    id: id,
-                    text: text,
-                    isChecked: isChecked,
-                },
+            const response = await axios.post(`http://${url}/addTask/`,
+                { id, text, isChecked },
             );
             const json = response.data;
 
@@ -68,9 +65,11 @@ export const TodoFunctions = () => {
                     id: parametrs.id,
                     text: parametrs.text,
                     isChecked: parametrs.isChecked,
+                    image: parametrs.image,
                 },
             );
             const json = response.data;
+            console.log(json, parametrs);
 
             if(json.data){
                 setTodo((t) => {

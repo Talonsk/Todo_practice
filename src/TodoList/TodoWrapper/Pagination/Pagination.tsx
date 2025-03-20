@@ -29,6 +29,7 @@ export const Pagination: FC<PaginationProps> = ({todo, deliteTask, updateTask}) 
                 id={data.id}
                 text={data.text}
                 isChecked={data.isChecked}
+                image={data.image}
                 deliteTask={deliteTask}
                 updateTask={updateTask}
             />
@@ -42,10 +43,18 @@ export const Pagination: FC<PaginationProps> = ({todo, deliteTask, updateTask}) 
                 renderRow={renderRow}
                 onReleaseRow={(key, currentOrder) => {
                     currentOrder.map(async (n, i) => {
-                        n = parseInt(String(n), 10);
-                        i !== n ? await updateTask(i + 1, {text: todo[n].text}) : {};
+                        n = parseInt(String(n), 10) + pageItemMax * (page - 1);
+                        i += pageItemMax * (page - 1);
+                        i !== n && await updateTask(i + 1, {
+                            text: todo[n].text,
+                            isChecked: todo[n].isChecked,
+                            image: todo[n].image || '',
+                        });
                     });
                 }}
+                style={styles.sortet_list}
+                scrollEnabled={false}
+                showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="handled"
             />
             {todo.length > pageItemMax &&
