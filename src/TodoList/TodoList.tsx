@@ -25,10 +25,12 @@ export const TodoList = () => {
         fetchData();
     }, [getTaskAPI]);
     useEffect(() =>{updateId();});
+    console.log(todo);
 
     return (
         <SafeAreaView style={{flex: 1}}>
             {isLoading ? <Loading/> :
+                todo &&
                 <View style={{flex: 1}}>
                     <AddTask
                         todo={todo}
