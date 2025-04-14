@@ -1,12 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Button, View, Text, TextInput, Image } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { addDeleteQueue, todoDelele, todoUpdate } from '../../../../../Reduser/Counter/Counter';
+import { RootState } from '../../../../../Reduser/Store/Store';
+import { useDispatch, useSelector } from 'react-redux';
 import { ItemProps } from './types';
 import { styles } from './style';
-import { launchImageLibrary } from 'react-native-image-picker';
 
-export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = '', deliteTask, updateTask }) => {
+export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = ''}) => {
+
+    const dispatch = useDispatch();
+    const queue_deletion = useSelector((state: RootState) => state.counter.queue_deletion);
 
     const [itemText, setText] = useState(text);
     const [localChecked] = useState(isChecked);
@@ -15,12 +21,19 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = '', delit
     const [isDelite, setDelite] = useState(false);
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
 
+    useEffect(() =>{
+        if(queue_deletion.includes(id - 1)){
+            console.log('is delete btn', id, queue_deletion);
+            setDelite(true);
+        }
+    }, [id, queue_deletion, setDelite]);
+
     const onButtonUpdatePress = () => {
         itemText && setChenge(!isChenge);
         const newText = itemText.trim();
         if (isChenge && text.trim() !== newText){
             if (newText !== '') {
-                updateTask(id, {text: newText});
+                dispatch(todoUpdate({id, parametrs: {text: newText}}));
             }
         }
         setText(itemText.trim());
@@ -28,10 +41,11 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = '', delit
 
     const onButtonDelitePress = () => {
         setDelite(!isDelite);
+        dispatch(addDeleteQueue({del_id: id}));
         if (!isDelite){
             setTimeoutId(
                 setTimeout(async () => {
-                    deliteTask(id);
+                    dispatch(todoDelele());
                 }, 2500)
             );
         }else{
@@ -47,7 +61,7 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = '', delit
         if (result.assets !== undefined){
             if (result.assets[0].base64 !== undefined){
                 const imageBase64 = result.assets[0].base64;
-                updateTask(id, {image: imageBase64});
+                dispatch(todoUpdate({id: id, parametrs: {image: imageBase64}}));
                 setImage(result.assets[0].base64);
             }
         }
@@ -60,7 +74,8 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = '', delit
                     size={20}
                     isChecked={isChecked}
                     onPress={() => {
-                        updateTask(id, {isChecked: !localChecked});
+                        dispatch(todoUpdate({id, parametrs: {isChecked: !localChecked}}));
+
                     }}
                 />
                 <Text style={styles.text}>{id}</Text>
@@ -69,7 +84,9 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = '', delit
                     isChenge ?
                     <TextInput
                         style={styles.text_input}
-                        onChangeText={(changeText)=>{setText(changeText);}}
+                        onChangeText={(changeText)=>{
+                            setText(changeText);
+                        }}
                         onSubmitEditing={onButtonUpdatePress}
                         autoFocus={true}
                         placeholder="Text cannot be empty"

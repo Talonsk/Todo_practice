@@ -8,7 +8,7 @@ export const PaginationButtons: FC<ButtonsProps> = ({page, maxPage, pagesArr, se
         <View style={styles.button_container}>
             <Button
                 title="<"
-                onPress={() => page > 1 ? setPage(p => p - 1) : {}}
+                onPress={() => page > 1 ? setPage(page - 1) : {}}
                 color={page > 1 ? '#2296f3' : '#808080'}
             />
 
@@ -25,7 +25,7 @@ export const PaginationButtons: FC<ButtonsProps> = ({page, maxPage, pagesArr, se
 
             <Button
                 title=">"
-                onPress={() => page < maxPage ? setPage(p => p + 1) : {}}
+                onPress={() => page < maxPage ? setPage(page + 1) : {}}
                 color={page < maxPage ? '#2296f3' : '#808080'}
             />
         </View>

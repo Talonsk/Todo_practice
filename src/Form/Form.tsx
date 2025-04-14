@@ -1,9 +1,9 @@
 /* eslint-disable no-sequences */
 import React, { useEffect } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, SafeAreaView, Text } from 'react-native';
+import { ControlerInput } from './Controller/ControlerInput';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
-import { ControlerInput } from './Controller/ControlerInput';
 import { Inputs } from './types';
 import { styles } from './style';
 
@@ -44,7 +44,7 @@ export const Form = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <ControlerInput {...{
                 control, errors,
                 name: 'login',
@@ -84,6 +84,6 @@ export const Form = () => {
                 title="Log in"
                 onPress={handleSubmit(onSubmit)}
             />
-        </View>
+        </SafeAreaView>
     );
 };

@@ -1,15 +1,24 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { View } from 'react-native';
 import SortableList, { RowProps } from 'react-native-sortable-list';
+import { RootState } from '../../../../Reduser/Store/Store';
+import { useDispatch, useSelector } from 'react-redux';
+import { changePage, todoReplace } from '../../../../Reduser/Counter/Counter';
 import { PaginationButtons } from './PaginationButtons/PaginationButtons';
 import { TodoItem } from './TodoItem/TodoItem';
-import { PaginationProps } from './types';
 import { styles } from './style';
 
-export const Pagination: FC<PaginationProps> = ({todo, deliteTask, updateTask}) => {
+export const Pagination = () => {
 
-    const pageItemMax = 9;
-    const [page, setPage] = useState(1);
+    const todo = useSelector((state : RootState) => state.counter.todo);
+    const dispatch = useDispatch();
+
+    const pageItemMax = useSelector((state: RootState) => state.counter.pageItemMax);
+    const page = useSelector((state: RootState) => state.counter.page);
+    const setPage = useCallback((new_page: number) => {
+        dispatch(changePage({new_page}));
+    }, [dispatch]);
+
     const maxPage = Math.ceil(todo.length / pageItemMax);
     const pagesArr = [...Array(maxPage).keys()].map(n => n + 1);
     const pageTodo = todo.filter(e => {
@@ -19,8 +28,10 @@ export const Pagination: FC<PaginationProps> = ({todo, deliteTask, updateTask}) 
             e.id > (page - 1) * pageItemMax
         );
     });
+
+    // console.log(page, maxPage);
     useEffect(() => {
-        page >= maxPage + 1 && setPage(p => p - 1);
+        page !== 1 && page === maxPage + 1 && setPage(page - 1);
     }, [page, maxPage, setPage]);
 
     const renderRow = ({data}: RowProps) =>{
@@ -30,8 +41,6 @@ export const Pagination: FC<PaginationProps> = ({todo, deliteTask, updateTask}) 
                 text={data.text}
                 isChecked={data.isChecked}
                 image={data.image}
-                deliteTask={deliteTask}
-                updateTask={updateTask}
             />
         );
     };
@@ -41,16 +50,8 @@ export const Pagination: FC<PaginationProps> = ({todo, deliteTask, updateTask}) 
             <SortableList
                 data={pageTodo}
                 renderRow={renderRow}
-                onReleaseRow={(key, currentOrder) => {
-                    currentOrder.map(async (n, i) => {
-                        n = parseInt(String(n), 10) + pageItemMax * (page - 1);
-                        i += pageItemMax * (page - 1);
-                        i !== n && await updateTask(i + 1, {
-                            text: todo[n].text,
-                            isChecked: todo[n].isChecked,
-                            image: todo[n].image || '',
-                        });
-                    });
+                onReleaseRow={(_, currentOrder) => {
+                    dispatch(todoReplace({new_order: currentOrder}));
                 }}
                 style={styles.sortet_list}
                 scrollEnabled={false}

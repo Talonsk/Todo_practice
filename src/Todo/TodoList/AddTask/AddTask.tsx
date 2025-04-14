@@ -1,28 +1,18 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, View, TextInput } from 'react-native';
-import { FunctionProps } from './types';
+import { todoAdd } from '../../../Reduser/Counter/Counter';
+import { useDispatch } from 'react-redux';
 import { styles } from './style';
 
-export const AddTask: FC<FunctionProps> = ({todo, addTask}) => {
+export const AddTask = () => {
 
-    const [id, setId] = useState(1);
+    const dispatch = useDispatch();
     const [inputText, onChangeText] = useState('');
 
-    useEffect(() => {
-        if(todo.length !== 0){
-            const lastId = todo[todo.length - 1].id;
-            setId(lastId + 1);
-        }else{
-            setId(1);
-        }
-    }, [todo]);
-
     const onPressAdd = () => {
-        const isChecked = false;
         const text = inputText.trim();
         if (text !== '') {
-            setId(i => i + 1);
-            addTask({id, text, isChecked});
+            dispatch(todoAdd({text}));
             onChangeText('');
         }
     };
