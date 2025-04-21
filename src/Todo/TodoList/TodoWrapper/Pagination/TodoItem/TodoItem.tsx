@@ -3,13 +3,13 @@ import React, { FC, useEffect, useState } from 'react';
 import { Button, View, Text, TextInput, Image } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { addDeleteQueue, todoDelele, todoUpdate } from '../../../../../Reduser/Counter/Counter';
-import { RootState } from '../../../../../Reduser/Store/Store';
+import { addDeleteQueue, todoDelele, todoUpdate } from '../../../Reduser/Counter/Counter';
+import { RootState } from '../../../Reduser/Store/Store';
 import { useDispatch, useSelector } from 'react-redux';
 import { ItemProps } from './types';
 import { styles } from './style';
 
-export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = ''}) => {
+export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = '' }) => {
 
     const dispatch = useDispatch();
     const queue_deletion = useSelector((state: RootState) => state.counter.queue_deletion);
@@ -21,9 +21,8 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = ''}) => {
     const [isDelite, setDelite] = useState(false);
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
 
-    useEffect(() =>{
-        if(queue_deletion.includes(id - 1)){
-            console.log('is delete btn', id, queue_deletion);
+    useEffect(() => {
+        if (queue_deletion.includes(id - 1)) {
             setDelite(true);
         }
     }, [id, queue_deletion, setDelite]);
@@ -31,9 +30,9 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = ''}) => {
     const onButtonUpdatePress = () => {
         itemText && setChenge(!isChenge);
         const newText = itemText.trim();
-        if (isChenge && text.trim() !== newText){
+        if (isChenge && text.trim() !== newText) {
             if (newText !== '') {
-                dispatch(todoUpdate({id, parametrs: {text: newText}}));
+                dispatch(todoUpdate({ id, parametrs: { text: newText } }));
             }
         }
         setText(itemText.trim());
@@ -41,14 +40,14 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = ''}) => {
 
     const onButtonDelitePress = () => {
         setDelite(!isDelite);
-        dispatch(addDeleteQueue({del_id: id}));
-        if (!isDelite){
+        dispatch(addDeleteQueue({ del_id: id }));
+        if (!isDelite) {
             setTimeoutId(
                 setTimeout(async () => {
                     dispatch(todoDelele());
                 }, 2500)
             );
-        }else{
+        } else {
             clearTimeout(timeoutId);
         }
     };
@@ -58,10 +57,10 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = ''}) => {
             mediaType: 'photo',
             includeBase64: true,
         });
-        if (result.assets !== undefined){
-            if (result.assets[0].base64 !== undefined){
+        if (result.assets !== undefined) {
+            if (result.assets[0].base64 !== undefined) {
                 const imageBase64 = result.assets[0].base64;
-                dispatch(todoUpdate({id: id, parametrs: {image: imageBase64}}));
+                dispatch(todoUpdate({ id, parametrs: { image: imageBase64 } }));
                 setImage(result.assets[0].base64);
             }
         }
@@ -74,40 +73,40 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = ''}) => {
                     size={20}
                     isChecked={isChecked}
                     onPress={() => {
-                        dispatch(todoUpdate({id, parametrs: {isChecked: !localChecked}}));
+                        dispatch(todoUpdate({ id, parametrs: { isChecked: !localChecked } }));
 
                     }}
                 />
                 <Text style={styles.text}>{id}</Text>
                 <Text style={styles.text}>
-                {
-                    isChenge ?
-                    <TextInput
-                        style={styles.text_input}
-                        onChangeText={(changeText)=>{
-                            setText(changeText);
-                        }}
-                        onSubmitEditing={onButtonUpdatePress}
-                        autoFocus={true}
-                        placeholder="Text cannot be empty"
-                        value={itemText}
-                    /> :
-                    <Text style={{ textDecorationLine: localChecked ? 'line-through' : 'none' }}>
-                        {itemText}
-                    </Text>
-                }
+                    {
+                        isChenge ?
+                            <TextInput
+                                style={styles.text_input}
+                                onChangeText={(changeText) => {
+                                    setText(changeText);
+                                }}
+                                onSubmitEditing={onButtonUpdatePress}
+                                autoFocus={true}
+                                placeholder="Text cannot be empty"
+                                value={itemText}
+                            /> :
+                            <Text style={{ textDecorationLine: localChecked ? 'line-through' : 'none' }}>
+                                {itemText}
+                            </Text>
+                    }
                 </Text>
             </View>
             {
                 localImage ?
-                <Image
-                    source={{uri: `data:image/png;base64,${localImage}`}}
-                    style={{width: 40, height: 40}}
-                /> :
-                <Button
-                    onPress={onButtonImagePress}
-                    title="⇫"
-                />
+                    <Image
+                        source={{ uri: `data:image/png;base64,${localImage}` }}
+                        style={{ width: 40, height: 40 }}
+                    /> :
+                    <Button
+                        onPress={onButtonImagePress}
+                        title="⇫"
+                    />
             }
             <View style={styles.button_container}>
                 <Button
@@ -117,7 +116,7 @@ export const TodoItem: FC<ItemProps> = ({ id, text, isChecked, image = ''}) => {
                 />
                 <Button
                     onPress={onButtonDelitePress}
-                    title={isDelite ? '↩' : '✕' }
+                    title={isDelite ? '↩' : '✕'}
                     color={isDelite ? '#a6a6a6' : '#ff3433'}
                 />
             </View>

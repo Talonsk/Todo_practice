@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     text_input:{
         height: 40,
         width: 250,
-        padding: 0,
+        // paddingLeft: 0,
     },
     button_container: {
         flexDirection: 'row',

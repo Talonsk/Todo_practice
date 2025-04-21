@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect } from 'react';
 import { View } from 'react-native';
 import SortableList, { RowProps } from 'react-native-sortable-list';
-import { RootState } from '../../../../Reduser/Store/Store';
+import { RootState } from '../../Reduser/Store/Store';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePage, todoReplace } from '../../../../Reduser/Counter/Counter';
+import { changePage, todoReplace } from '../../Reduser/Counter/Counter';
 import { PaginationButtons } from './PaginationButtons/PaginationButtons';
 import { TodoItem } from './TodoItem/TodoItem';
 import { styles } from './style';
-
 export const Pagination = () => {
 
     const todo = useSelector((state : RootState) => state.counter.todo);
@@ -29,7 +28,6 @@ export const Pagination = () => {
         );
     });
 
-    // console.log(page, maxPage);
     useEffect(() => {
         page !== 1 && page === maxPage + 1 && setPage(page - 1);
     }, [page, maxPage, setPage]);

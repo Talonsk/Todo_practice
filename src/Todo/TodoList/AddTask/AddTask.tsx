@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, View, TextInput } from 'react-native';
-import { todoAdd } from '../../../Reduser/Counter/Counter';
+import { todoAdd } from '../Reduser/Counter/Counter';
 import { useDispatch } from 'react-redux';
 import { styles } from './style';
 

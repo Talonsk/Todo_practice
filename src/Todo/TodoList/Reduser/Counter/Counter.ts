@@ -80,39 +80,32 @@ export const counterSlice = createSlice({
             const page = state.page;
             const pageItemMax = state.pageItemMax;
             let new_del_order: number[]  = [];
+            let todos = state.todo.map((_, index)=>{
+                return {...state.todo[index]};
+            });
 
-            const new_todo = currentOrder.map((n, i) => {
+            currentOrder.map((n, i) => {
                 n = parseInt(String(n), 10) + pageItemMax * (page - 1);
                 i += pageItemMax * (page - 1);
                 if(i !== n){
                     const parametrs = {
-                        text: state.todo[n].text,
-                        isChecked: state.todo[n].isChecked,
-                        image: state.todo[n].image || '',
+                        text: todos[n].text,
+                        isChecked: todos[n].isChecked,
+                        image: todos[n].image || '',
                     };
                     state.queue_deletion.map(del_id => {
                         if(del_id === n) {
                             new_del_order.push(i);
                         }
                     });
-                    return {...state.todo[i], ...parametrs};
-                }else{
-                    return {...state.todo[n]};
+                    state.todo[i] = {id: i + 1, ...parametrs};
                 }
             });
-            state.todo = new_todo;
-            state.queue_deletion = new_del_order;
 
-            // state.queue_deletion = state.queue_deletion.map(i => {
-            //     if(i === id && change_id){
-            //         return change_id;
-            //     }else{
-            //         return i;
-            //     }
-            // });
+            state.queue_deletion = new_del_order;
         },
         todoUpdate(state, action : PayloadAction<UpdateProps>) {
-            const id = action.payload.id;
+            const id = action.payload.id - 1;
             const task = action.payload.parametrs;
             state.todo[id] = {...state.todo[id], ...task};
 
