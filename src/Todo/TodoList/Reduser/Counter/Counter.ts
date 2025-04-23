@@ -1,9 +1,9 @@
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AddProps, DeleteProps, PageProps, QueueDeletion, ReplaceProps, TodoProps, UpdateProps } from './types';
-// import { TodoFunctions } from '../../Todo/TodoList/TodoFunctions/TodoFunctions';
+import { TodoFunctions } from './../../TodoFunctions/TodoFunctions';
 
-// const Todo = TodoFunctions().todo;
+const Todo = TodoFunctions().todo;
+
 const todo : TodoProps[] = [];
 const queue_deletion : QueueDeletion = [];
 const url = 'gjgjdf007y.temp.swtest.ru';
@@ -32,10 +32,9 @@ export const counterSlice = createSlice({
                 },
             );
         },
-        todoGet() {
-            // (state)
-            // console.log(Todo);
-            // Todo ? state.todo = Todo : {};
+        todoGet(state) {
+            state.todo = Todo ? Todo : [];
+            state.id = state.todo.length;
         },
         changePage(state, action: PayloadAction<PageProps>){
             state.page = action.payload.new_page;
@@ -128,6 +127,7 @@ export const counterSlice = createSlice({
 });
 
 export const {
+    todoGet,
     todoAdd,
     todoDelele,
     todoUpdate,

@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { JsonProps, TodoProps } from './types';
 import { useMMKVObject } from 'react-native-mmkv';
+// import { useMMKVObject } from 'react-native-mmkv';
 const url = 'gjgjdf007y.temp.swtest.ru';
 
 export const TodoFunctions = () => {
@@ -14,9 +15,7 @@ export const TodoFunctions = () => {
             const json : JsonProps = await response.json();
 
             if(json.data){
-                setTodo(
-                    [...json.data]
-                );
+                setTodo([...json.data]);
             }else{
                 console.error(json.errors);
             }

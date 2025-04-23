@@ -5,17 +5,21 @@ import { AddTask } from './AddTask/AddTask';
 import { TodoWrapper } from './TodoWrapper/TodoWrapper';
 import { TodoFunctions } from './TodoFunctions/TodoFunctions';
 import { Loading } from './Loading/Loading';
+import { useDispatch } from 'react-redux';
+import { todoGet } from './Reduser/Counter/Counter';
 
 export const TodoList = () => {
 
     const {isLoading, getTaskAPI} = TodoFunctions();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         async function fetchData(){
             await getTaskAPI();
         }
         fetchData();
-    }, [getTaskAPI]);
+        dispatch(todoGet());
+    }, [dispatch, getTaskAPI]);
 
     return (
         <View style={{flex: 1}}>
